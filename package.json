@@ -1,0 +1,29 @@
+{
+  "name": "float-math",
+  "version": "1.0.0",
+  "description": "javascript float math calculation",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donghanji/float-math.git"
+  },
+  "keywords": [
+    "js",
+    "float",
+    "math",
+    "calculation",
+    "js",
+    "float",
+    "math",
+    "operation"
+  ],
+  "author": "donghanji",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donghanji/float-math/issues"
+  },
+  "homepage": "https://github.com/donghanji/float-math#readme"
+}
