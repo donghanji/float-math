@@ -23,7 +23,7 @@ javascript float math calculation
 ### 3. test
 `npm test`
 
-### 4.
+### 4.0 gulp require
 <pre>
 var fl = require('float-math');
 
@@ -43,4 +43,72 @@ console.log("f5="+f5);
 console.log("f6="+f6);
 console.log("f7="+f7);
 console.log("f8="+f8);
+</pre>
+
+### 4.1 gulp pm
+<pre>
+module.declare(['float-math'],function(require){
+    var fl = require('float-math');
+
+    var f1 = 1.01;
+    var f2 = 2.02;
+
+    var f3 = fl.add(f1,f2),
+        f4 = fl.sub(f1,f2),
+        f5 = fl.mul(f1,f2),
+        f6 = fl.div(f1,f2),
+        f7 = fl.add(f1,f2,f3),
+        f8 = fl.mul(f1,f2,f3);
+
+    console.log("f3="+f3);
+    console.log("f4="+f4);
+    console.log("f5="+f5);
+    console.log("f6="+f6);
+    console.log("f7="+f7);
+    console.log("f8="+f8);
+});
+</pre>
+### 4.2 gulp proto
+<pre>
+&lt;script type="text/javascript" src="./dest/proto/float-math.js"&gt;&lt;/script&gt;
+(function(){
+    var f1 = 1.01;
+    var f2 = 2.02;
+
+    var f3 = fl.add(f2),
+        f4 = fl.sub(f2),
+        f5 = fl.mul(f2),
+        f6 = fl.div(,f2),
+        f7 = fl.add(f2,f3),
+        f8 = fl.mul(f2,f3);
+
+    console.log("f3="+f3);
+    console.log("f4="+f4);
+    console.log("f5="+f5);
+    console.log("f6="+f6);
+    console.log("f7="+f7);
+    console.log("f8="+f8);
+})();
+</pre>
+### 4.3 gulp define
+<pre>
+require(['float-math'],function(fl){
+
+    var f1 = 1.01;
+    var f2 = 2.02;
+
+    var f3 = fl.add(f1,f2),
+        f4 = fl.sub(f1,f2),
+        f5 = fl.mul(f1,f2),
+        f6 = fl.div(f1,f2),
+        f7 = fl.add(f1,f2,f3),
+        f8 = fl.mul(f1,f2,f3);
+
+    console.log("f3="+f3);
+    console.log("f4="+f4);
+    console.log("f5="+f5);
+    console.log("f6="+f6);
+    console.log("f7="+f7);
+    console.log("f8="+f8);
+});
 </pre>
