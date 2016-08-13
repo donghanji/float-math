@@ -40,22 +40,38 @@ var _proto_end_str=`
 })();
 `;
 var _proto_str=`
+	//
+	function handleArgs(current,args){
+		args=Array.prototype.slice.call(args);
+		args=[Number(current)].concat(args);
+		//
+		//console.log('handle args:',args);
+		return args;
+	};
 	// Number.prototype
-	Number.prototype.add=function(num){
+	Number.prototype.add=function(){
+		var args=arguments;
+		args=handleArgs(this,args);
 		//
-		return FloatMath.add(this,num);
+		return FloatMath.add.apply(null,args);
 	}
-	Number.prototype.sub=function(num){
+	Number.prototype.sub=function(){
+		var args=arguments;
+		args=handleArgs(this,args);
 		//
-		return FloatMath.sub(this,num);
+		return FloatMath.sub.apply(null,args);
 	}
-	Number.prototype.mul=function(num){
+	Number.prototype.mul=function(){
+		var args=arguments;
+		args=handleArgs(this,args);
 		//
-		return FloatMath.mul(this,num);
+		return FloatMath.mul.apply(null,args);
 	}
-	Number.prototype.div=function(num){
+	Number.prototype.div=function(){
+		var args=arguments;
+		args=handleArgs(this,args);
 		//
-		return FloatMath.div(this,num);
+		return FloatMath.div.apply(null,args);
 	}
 `;
 //
@@ -67,9 +83,11 @@ module.exports=exports=FloatMath;
 var _src='./template.js';
 var _dest='./dest/';
 var _dest_float_math_require='index.js';
-var _dest_float_math_pm='pm/float-math.js';
 var _dest_float_math_proto='proto/float-math.js';
+var _dest_float_math_pm='pm/float-math.js';
+var _dest_float_math_pm_proto='pm-proto/float-math.js';
 var _dest_float_math_define='define/float-math.js';
+var _dest_float_math_define_proto='define-proto/float-math.js';
 
 var _start='/**{ float math start }**/';
 var _end='/**{ float math end }**/';
@@ -104,6 +122,20 @@ gulp.task('require',function(){
 		.pipe(gulp.dest('./'));
 });
 //
+gulp.task('proto',function(){
+	//
+	return gulp
+		.src(_src)
+		.pipe(rename(_dest_float_math_proto))
+		.pipe(replace(_start,_proto_start_str))
+		.pipe(replace(_end,_proto_str+_proto_end_str))
+		.pipe(prettify(prettifyOptions))
+		.pipe(gulp.dest(_dest))
+		.pipe(rename(minfile(_dest_float_math_proto)))
+		.pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(_dest));
+});
+//
 gulp.task('pm',function(){
 	var ph=ploaceholder(_pm_str);
 	//
@@ -119,16 +151,17 @@ gulp.task('pm',function(){
 		.pipe(gulp.dest(_dest));
 });
 //
-gulp.task('proto',function(){
+gulp.task('pm-proto',function(){
+	var ph=ploaceholder(_pm_str);
 	//
 	return gulp
 		.src(_src)
-		.pipe(rename(_dest_float_math_proto))
-		.pipe(replace(_start,_proto_start_str))
-		.pipe(replace(_end,_proto_str+_proto_end_str))
+		.pipe(rename(_dest_float_math_pm_proto))
+		.pipe(replace(_start,ph[0]))
+		.pipe(replace(_end,_proto_str+ph[1]))
 		.pipe(prettify(prettifyOptions))
 		.pipe(gulp.dest(_dest))
-		.pipe(rename(minfile(_dest_float_math_proto)))
+		.pipe(rename(minfile(_dest_float_math_pm_proto)))
 		.pipe(uglify(uglifyOptions))
 		.pipe(gulp.dest(_dest));
 });
@@ -147,8 +180,23 @@ gulp.task('define',function(){
 		.pipe(uglify(uglifyOptions))
 		.pipe(gulp.dest(_dest));
 });
+//
+gulp.task('define-proto',function(){
+	var ph=ploaceholder(_define_str);
+	//
+	return gulp
+		.src(_src)
+		.pipe(rename(_dest_float_math_define_proto))
+		.pipe(replace(_start,ph[0]))
+		.pipe(replace(_end,_proto_str+ph[1]))
+		.pipe(prettify(prettifyOptions))
+		.pipe(gulp.dest(_dest))
+		.pipe(rename(minfile(_dest_float_math_define_proto)))
+		.pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(_dest));
+});
 
 //
-gulp.task('default',['require','pm','proto','define']);
+gulp.task('default',['require','proto','pm','define','pm-proto','define-proto']);
 
 module.exports=gulp;
